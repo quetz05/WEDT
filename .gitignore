@@ -28,9 +28,6 @@
 *.app
 
 # Project files
-*.csproj
-*.sln
-*.config
 
 bin
 obj
