@@ -26,3 +26,11 @@
 *.exe
 *.out
 *.app
+
+# Project files
+*.csproj
+*.sln
+*.config
+
+bin
+obj
