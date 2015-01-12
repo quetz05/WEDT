@@ -25,10 +25,20 @@ namespace WEDT.DBTranslation
 
         public void saveLink(String from, String to)
         {
-            m_dbConnection.Open();
+            
             string sql = String.Format("insert into links (start, end) values ('{0}', '{1}')", from, to);
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             command.ExecuteNonQuery();
+            
+        }
+
+        public void open()
+        {
+            m_dbConnection.Open();
+        }
+
+        public void close()
+        {
             m_dbConnection.Close();
         }
     }

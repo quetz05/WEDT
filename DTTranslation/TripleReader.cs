@@ -25,6 +25,7 @@ namespace WEDT.DBTranslation
         public void translate()
         {
             int i = 0;
+            db.open();
             while ((analyzedText = stream.ReadLine()) != null)
             {
                 ++i;
@@ -43,7 +44,7 @@ namespace WEDT.DBTranslation
                 }
              //   if (i > 4) break;
             }
-
+            db.close();
             stream.Close();
             Console.WriteLine("Stworzono baze o {0} rekordach", i);
             Console.ReadLine();
