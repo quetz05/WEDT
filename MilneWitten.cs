@@ -17,6 +17,9 @@ namespace WEDT
 
         DataProvider.WikiAmbigouosProvider wap;
         DataProvider.WikiRedirectsProvider wrp;
+        DataProvider.WikiCategoryProvider wcp;
+
+        static const int maxCategoryDepth = 4;
 
         public MilneWitten(String word1, String word2)
         {
@@ -101,7 +104,23 @@ namespace WEDT
        }
 
 
-        private bool CategoryTreeSearch()
+       private bool CategoryTreeSearch()
+       {
+
+
+           String[] word1Categories = wcp.Get(word1Meaning);
+           String[] word2Categories = wcp.Get(word2Meaning);
+
+           foreach (String cat1 in word1Categories)
+               foreach(String cat2 in word2Categories)
+               {
+                   // Tworzenie i dodawanie drzew
+
+               }
+
+
+           return true;
+       }
 
     }
 }
