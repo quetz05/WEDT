@@ -12,6 +12,7 @@
 *.so
 *.dylib
 *.dll
+!DDTranslation/SQLite.Interop.dll
 
 # Fortran module files
 *.mod
@@ -26,8 +27,10 @@
 *.exe
 *.out
 *.app
+!NuGet.exe
 
 # Project files
 
 bin
 obj
+packages/
