@@ -13,6 +13,7 @@
 *.dylib
 *.dll
 !DDTranslation/SQLite.Interop.dll
+!DataProvider/SQLite.Interop.dll
 
 # Fortran module files
 *.mod
@@ -34,3 +35,4 @@
 bin
 obj
 packages/
+TestResults/
