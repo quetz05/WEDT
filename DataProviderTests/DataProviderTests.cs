@@ -46,5 +46,44 @@ namespace DataProviderTests
             Assert.AreEqual(0, links.Count, "Pusta lista");
 
         }
+
+        [TestMethod]
+        public void wikiPagelinksProviderDisambiguatesTest()
+        {
+            WikiPagelinksProvider provider = new WikiPagelinksProvider();
+            List<String> links = provider.disambiguates("Al");
+            Assert.AreEqual(14, links.Count);
+            Assert.IsTrue(links.Contains("Alabama"));
+            Assert.IsTrue(links.Contains("Albania"));
+
+        }
+
+        [TestMethod]
+        public void wikiCategoryProviderSubcategoryTest()
+        {
+            WikiCategoryProvider provider = new WikiCategoryProvider();
+            List< String > subcategories = provider.getSubcategories("fizyka");
+            Assert.AreEqual(36, subcategories.Count);
+
+            Assert.IsTrue(subcategories.Contains("Biofizyka"));
+            Assert.IsTrue(subcategories.Contains("Fizycy"));
+
+            subcategories = provider.getSubcategories("adfwef");
+            Assert.AreEqual(0, subcategories.Count);
+
+        }
+
+        [TestMethod]
+        public void wikiCategoryProviderCategoryTest()
+        {
+            WikiCategoryProvider provider = new WikiCategoryProvider();
+            List<String> subcategories = provider.getCategories("Albert Einstein");
+            Assert.AreEqual(13, subcategories.Count);
+            Assert.IsTrue(subcategories.Contains("Wykładowcy Uniwersytetu Humboldtów w Berlinie"));
+            Assert.IsTrue(subcategories.Contains("Niemieccy socjaliści"));
+
+            subcategories = provider.getSubcategories("adfwef");
+            Assert.AreEqual(0, subcategories.Count);
+        }
     }
 }

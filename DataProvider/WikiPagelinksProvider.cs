@@ -20,13 +20,25 @@ namespace WEDT.DataProvider
 
         public List<String> pagelinks(String from)
         {
-           
+            return this.getList(from, "WikiLink");
+        }
+
+        public List<String> disambiguates(String from)
+        {
+            return this.getList(from, "Disambiguates");
+        }
+
+        private List<String> getList(String a, String from)
+        {
+
             List<String> list = new List<String>();
 
             String strQuery;// = String.Format(strFormat, from);
             strQuery = "SELECT * WHERE { <http://pl.dbpedia.org/resource/"
-                + DataPreparator.FirstCharToUpper(from) 
-                + "> <http://dbpedia.org/ontology/wikiPageWikiLink> ?a . }";
+                + DataPreparator.FirstCharToUpper(a)
+                + "> <http://dbpedia.org/ontology/wikiPage"
+                + from
+                + "> ?a . }";
             Object results = store.Query(strQuery);
             if (results is SparqlResultSet)
             {
