@@ -15,7 +15,7 @@ namespace WEDT
         private String word1Meaning;
         private String word2Meaning;
 
-        DataProvider.WikiAmbigouosProvider wap;
+        DataProvider.WikiPagelinksProvider wap;
         DataProvider.WikiRedirectsProvider wrp;
         DataProvider.WikiCategoryProvider wcp;
 
