@@ -161,9 +161,11 @@ namespace WEDT
            Console.WriteLine("\tCategoryTreeSearch:: 2 depth");
            foreach (String cat1 in word1Categories)
                word1Tree.getChild(cat1).addChilds(wcp.getSubcategories(cat1));
+               //word1Tree.getChild(cat1).addChilds(wcp.getParcategories(cat1));
 
            foreach (String cat2 in word2Categories)
               word2Tree.getChild(cat2).addChilds(wcp.getSubcategories(cat2));
+           //word2Tree.getChild(cat1).addChilds(wcp.getParcategories(cat1));
 
            common = Tree.FindCommon(word1Tree, word2Tree);
 
@@ -179,8 +181,10 @@ namespace WEDT
                foreach (Tree subCat in cat.children)
                {
                    String[] tab = wcp.getSubcategories(subCat.data);
+                   //String tab = wcp.getParcategories(subCat.data);
                    if (tab != null)
                        cat.getChild(subCat.data).addChilds(tab);
+                       //cat.getChild(subCat.data).addChild(tab);
                }
 
 
@@ -188,8 +192,10 @@ namespace WEDT
                foreach (Tree subCat in cat.children)
                {
                    String[] tab = wcp.getSubcategories(subCat.data);
+                   //String tab = wcp.getParcategories(subCat.data);
                    if (tab != null)
                        cat.getChild(subCat.data).addChilds(tab);
+                       //cat.getChild(subCat.data).addChild(tab);
                }
 
 
@@ -206,8 +212,10 @@ namespace WEDT
                    foreach (Tree subsubCat in subCat.children)
                    {
                        String[] tab = wcp.getSubcategories(subsubCat.data);
+                       //String tab = wcp.getParcategories(subsubCat.data);
                        if (tab != null)
                            subCat.getChild(subsubCat.data).addChilds(tab);
+                            //subCat.getChild(subsubCat.data).addChild(tab);
                    }
 
            foreach (Tree cat in word2Tree.children)
@@ -215,8 +223,10 @@ namespace WEDT
                    foreach (Tree subsubCat in subCat.children)
                    {
                        String[] tab = wcp.getSubcategories(subsubCat.data);
+                       //String tab = wcp.getParcategories(subsubCat.data);
                        if (tab != null)
                            subCat.getChild(subsubCat.data).addChilds(tab);
+                            //subCat.getChild(subsubCat.data).addChild(tab);
                    }
 
            if (common != "")
