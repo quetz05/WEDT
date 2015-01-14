@@ -5,21 +5,28 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using VDS.RDF.Query;
+using VDS.RDF.Storage;
 
 namespace WEDT.DataProvider
 {
     public class WikiCategoryProvider
     {
+        SparqlConnector store;
+
         public WikiCategoryProvider()
         {
-
+            store = new SparqlConnector(new Uri("http://pl.dbpedia.org/sparql"));
+            
         }
 
         public String[] getSubcategories(String ubercategory)
         {
+
             List<String> list = new List<string>();
             var client = new WebClient();
             string url = 
+
                 "http://pl.wikipedia.org/w/api.php?format=json&action=query&list=categorymembers&cmtitle=Category:"
                 + ubercategory
                 + "&cmtype=subcat&cmlimit=200";
@@ -64,6 +71,36 @@ namespace WEDT.DataProvider
             }
 
             return list.ToArray();
+        }
+
+        public List<String> getUbercategory(String a)
+        {
+
+            List<String> list = new List<String>();
+
+            String strQuery;// = String.Format(strFormat, from);
+            strQuery =
+                "select ?a{ <http://pl.dbpedia.org/resource/Kategoria:"
+                + a
+                + "> <http://www.w3.org/2004/02/skos/core#broader> ?a }";
+            Object results = store.Query(strQuery);
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+                foreach (SparqlResult r in rset)
+                {
+                    String str = (r["a"].ToString());
+                    str = str.Remove(0, 41);
+                    str = Uri.UnescapeDataString(str);
+                    list.Add(str);
+                }
+            }
+            else
+            {
+                throw new Exception("Did not get a SPARQL Result Set as expected");
+            }
+
+            return list;
         }
     }
 }
