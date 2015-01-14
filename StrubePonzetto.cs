@@ -10,6 +10,8 @@ namespace WEDT
 
     class StrubePonzetto
     {
+        public String trueWord1;
+        public String trueWord2;
         public String word1;
         public String word2;
 
@@ -34,8 +36,10 @@ namespace WEDT
             wpp = new WikiPagelinksProvider();
             wrp = new WikiRedirectsProvider();
             wcp = new WikiCategoryProvider();
-            this.word1 = word1;
-            this.word2 = word2;
+            trueWord1 = word1;
+            trueWord2 = word2;
+            this.word1 = word1 + " (ujednoznacznienie)";
+            this.word2 = word2 + " (ujednoznacznienie)";
 
             pathLength = -1;
         }
@@ -235,6 +239,11 @@ namespace WEDT
                return true;
            }
 
+
+           Tree.print(word1Tree);
+           Console.WriteLine(" ");
+           Tree.print(word2Tree);
+
            return false;
        }
 
@@ -242,6 +251,10 @@ namespace WEDT
        private void GetLength()
        {
            pathLength = Tree.GetLength(word1Tree) + Tree.GetLength(word2Tree);
+
+           Console.WriteLine("");
+           Console.WriteLine("Wspólna kategoria (" + trueWord1 + ", " + trueWord2 + "): " + commonCategory);
+           Console.WriteLine("Długość ścieżki wynosi: " + pathLength);
 
        }
 

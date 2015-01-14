@@ -10,7 +10,7 @@ namespace WEDT
     {
         static void Main(string[] args)
         {
-            StrubePonzetto sp = new StrubePonzetto("król", "wieża");
+            StrubePonzetto sp = new StrubePonzetto("pralka", "lodówka");
 
             int result = sp.Run();
 
@@ -18,6 +18,10 @@ namespace WEDT
                 Console.WriteLine("Brak jednego ze słów w bazie!");
             else if (result == 2)
                 Console.WriteLine("Brak wspólnej kategorii");
+
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("Koniec programu...");
 
             Console.ReadLine();
 
