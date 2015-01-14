@@ -138,8 +138,8 @@ namespace WEDT
 
            return true;
        }
-       //private void BuildTree()
 
+       // Step 2
        private bool CategoryTreeSearch()
        {
            word1Tree = new Tree(word1Meaning);
