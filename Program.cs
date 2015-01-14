@@ -10,7 +10,7 @@ namespace WEDT
     {
         static void Main(string[] args)
         {
-            StrubePonzetto sp = new StrubePonzetto("ptak", "pies");
+            StrubePonzetto sp = new StrubePonzetto("Ptaki", "pies");
 
             int result = sp.Run();
 
