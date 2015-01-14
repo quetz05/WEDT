@@ -64,8 +64,32 @@ namespace WEDT
 
             public static String FindCommon(Tree tree1, Tree tree2)
             {
+                foreach (Tree kid in tree1.children)
+                {
+                    if (Traverse(kid.data, tree2) != "")
+                        return kid.data;
+
+                    if (FindCommon(kid, tree2) != "")
+                        return kid.data;
+                }
+
                 return "";
 
+            }
+
+            private static String Traverse(String word, Tree tree)
+            {
+                foreach (Tree kid in tree.children)
+                {
+                    
+                    if (kid.data == word)
+                        return kid.data;
+
+                    if (Traverse(word, kid) == word)
+                        return word;
+                }
+
+                return "";
             }
 
         }
