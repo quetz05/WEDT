@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MilneWitten.cs" />
+    <Compile Include="StrubePonzetto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tree.cs" />
@@ -53,6 +53,10 @@
     <ProjectReference Include="DataProvider\DataProvider.csproj">
       <Project>{c8822a05-f449-4299-ab00-f84ec0360b62}</Project>
       <Name>DataProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="DTTranslation\DBTranslation.csproj">
+      <Project>{7c44897e-cec8-4a9c-9cfa-9a50170f2912}</Project>
+      <Name>DBTranslation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,7 +10,7 @@ namespace WEDT
         {
 
             public String data;
-            LinkedList<Tree> children;
+            public LinkedList<Tree> children;
 
             public Tree(String data)
             {
@@ -62,12 +62,9 @@ namespace WEDT
                     print(kid, tab);
             }
 
-            public static bool FindCommon(Tree tree1, Tree tree2)
+            public static String FindCommon(Tree tree1, Tree tree2)
             {
-
-
-
-                return true;
+                return "";
 
             }
 

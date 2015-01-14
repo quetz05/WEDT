@@ -15,7 +15,7 @@ namespace WEDT.DataProvider
 
         }
 
-        public List<String> getSubcategories(String ubercategory)
+        public String[] getSubcategories(String ubercategory)
         {
             List<String> list = new List<string>();
             var client = new WebClient();
@@ -37,9 +37,9 @@ namespace WEDT.DataProvider
 
             }
 
-            return list;
+            return list.ToArray();
         }
-        public List<String> getCategories(String article)
+        public String[] getCategories(String article)
         {
             List<String> list = new List<string>();
             var client = new WebClient();
@@ -61,7 +61,7 @@ namespace WEDT.DataProvider
                 }
             }
 
-            return list;
+            return list.ToArray();
         }
     }
 }

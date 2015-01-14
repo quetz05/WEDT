@@ -18,14 +18,14 @@ namespace WEDT.DataProvider
             store = new SparqlConnector(new Uri("http://pl.dbpedia.org/sparql"));
         }
 
-        public List<String> pagelinks(String from)
+        public String[] pagelinks(String from)
         {
-            return this.getList(from, "WikiLink");
+            return this.getList(from, "WikiLink").ToArray();
         }
 
-        public List<String> disambiguates(String from)
+        public String[] disambiguates(String from)
         {
-            return this.getList(from, "Disambiguates");
+            return this.getList(from, "Disambiguates").ToArray();
         }
 
         private List<String> getList(String a, String from)
