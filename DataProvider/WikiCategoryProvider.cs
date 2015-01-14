@@ -73,7 +73,7 @@ namespace WEDT.DataProvider
             return list.ToArray();
         }
 
-        public List<String> getUbercategory(String a)
+        public String[] getUbercategory(String a)
         {
 
             List<String> list = new List<String>();
@@ -100,7 +100,7 @@ namespace WEDT.DataProvider
                 throw new Exception("Did not get a SPARQL Result Set as expected");
             }
 
-            return list;
+            return list.ToArray();
         }
     }
 }

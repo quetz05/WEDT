@@ -160,12 +160,12 @@ namespace WEDT
            // 2 - depth
            Console.WriteLine("\tCategoryTreeSearch:: 2 depth");
            foreach (String cat1 in word1Categories)
-               word1Tree.getChild(cat1).addChilds(wcp.getSubcategories(cat1));
-               //word1Tree.getChild(cat1).addChilds(wcp.getParcategories(cat1));
+               //word1Tree.getChild(cat1).addChilds(wcp.getSubcategories(cat1));
+               word1Tree.getChild(cat1).addChilds(wcp.getUbercategory(cat1));
 
            foreach (String cat2 in word2Categories)
-              word2Tree.getChild(cat2).addChilds(wcp.getSubcategories(cat2));
-           //word2Tree.getChild(cat1).addChilds(wcp.getParcategories(cat1));
+              //word2Tree.getChild(cat2).addChilds(wcp.getSubcategories(cat2));
+                word2Tree.getChild(cat2).addChilds(wcp.getUbercategory(cat2));
 
            common = Tree.FindCommon(word1Tree, word2Tree);
 
@@ -180,22 +180,22 @@ namespace WEDT
            foreach (Tree cat in word1Tree.children)
                foreach (Tree subCat in cat.children)
                {
-                   String[] tab = wcp.getSubcategories(subCat.data);
-                   //String[] tab = wcp.getParcategories(subCat.data);
+                   //String[] tab = wcp.getSubcategories(subCat.data);
+                   String[] tab = wcp.getUbercategory(subCat.data);
                    if (tab != null)
+                      // cat.getChild(subCat.data).addChilds(tab);
                        cat.getChild(subCat.data).addChilds(tab);
-                       //cat.getChild(subCat.data).addChilds(tab);
                }
 
 
            foreach (Tree cat in word2Tree.children)
                foreach (Tree subCat in cat.children)
                {
-                   String[] tab = wcp.getSubcategories(subCat.data);
-                   //String[] tab = wcp.getParcategories(subCat.data);
+                   //String[] tab = wcp.getSubcategories(subCat.data);
+                   String[] tab = wcp.getUbercategory(subCat.data);
                    if (tab != null)
-                       cat.getChild(subCat.data).addChilds(tab);
                        //cat.getChild(subCat.data).addChilds(tab);
+                       cat.getChild(subCat.data).addChilds(tab);
                }
 
 
@@ -211,22 +211,22 @@ namespace WEDT
                foreach (Tree subCat in cat.children)
                    foreach (Tree subsubCat in subCat.children)
                    {
-                       String[] tab = wcp.getSubcategories(subsubCat.data);
-                       //String[] tab = wcp.getParcategories(subsubCat.data);
+                       //String[] tab = wcp.getSubcategories(subsubCat.data);
+                       String[] tab = wcp.getUbercategory(subsubCat.data);
                        if (tab != null)
-                           subCat.getChild(subsubCat.data).addChilds(tab);
-                            //subCat.getChild(subsubCat.data).addChilds(tab);
+                           //subCat.getChild(subsubCat.data).addChilds(tab);
+                            subCat.getChild(subsubCat.data).addChilds(tab);
                    }
 
            foreach (Tree cat in word2Tree.children)
                foreach (Tree subCat in cat.children)
                    foreach (Tree subsubCat in subCat.children)
                    {
-                       String[] tab = wcp.getSubcategories(subsubCat.data);
-                       //String[] tab = wcp.getParcategories(subsubCat.data);
+                       //String[] tab = wcp.getSubcategories(subsubCat.data);
+                       String[] tab = wcp.getUbercategory(subsubCat.data);
                        if (tab != null)
-                           subCat.getChild(subsubCat.data).addChilds(tab);
-                            //subCat.getChild(subsubCat.data).addChilds(tab);
+                           //subCat.getChild(subsubCat.data).addChilds(tab);
+                            subCat.getChild(subsubCat.data).addChilds(tab);
                    }
 
            if (common != "")

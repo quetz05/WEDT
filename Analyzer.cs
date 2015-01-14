@@ -32,7 +32,6 @@ namespace WEDT
         static public double gloss()
         {
 
-
             return 0.0;
         }
 
