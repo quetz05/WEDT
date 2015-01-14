@@ -93,12 +93,25 @@ namespace DataProviderTests
         public void wikiCategoryProviderCategoryTest()
         {
             WikiCategoryProvider provider = new WikiCategoryProvider();
-            List<String> subcategories = new List<string> ( provider.getCategories("Albert Einstein"));
-            Assert.AreEqual(13, subcategories.Count);
-            Assert.IsTrue(subcategories.Contains("Wykładowcy Uniwersytetu Humboldtów w Berlinie"));
-            Assert.IsTrue(subcategories.Contains("Niemieccy socjaliści"));
+            List<String> subcategories = new List<string> ( provider.getCategories("Ptaki"));
+            Assert.AreEqual(3, subcategories.Count);
+            Assert.IsTrue(subcategories.Contains("Artykuły na medal"));
+            Assert.IsTrue(subcategories.Contains("Ptaki"));
 
             subcategories = new List<string> ( provider.getSubcategories("adfwef") );
+            Assert.AreEqual(0, subcategories.Count);
+        }
+
+        [TestMethod]
+        public void wikiCategoryProviderUberategoriesTest()
+        {
+            WikiCategoryProvider provider = new WikiCategoryProvider();
+            List<String> subcategories = new List<string>(provider.getUbercategory("Ptaki"));
+            Assert.AreEqual(2, subcategories.Count);
+            Assert.IsTrue(subcategories.Contains("Czworonogi"));
+            Assert.IsTrue(subcategories.Contains("Ornitologia"));
+
+            subcategories = new List<string>(provider.getSubcategories("adfwef"));
             Assert.AreEqual(0, subcategories.Count);
         }
     }
