@@ -25,8 +25,7 @@ namespace WEDT
         Tree word1Tree;
         Tree word2Tree;
 
-        int word1Path;
-        int word2Path;
+        int pathLength;
 
         const int maxCategoryDepth = 4;
 
@@ -38,8 +37,7 @@ namespace WEDT
             this.word1 = word1;
             this.word2 = word2;
 
-            word1Path = -1;
-            word2Path = -1;
+            pathLength = -1;
         }
 
         public int Run()
@@ -48,11 +46,11 @@ namespace WEDT
             Console.WriteLine("Searching for meaning of words...");
             if (!ChooseMeaning())
                 return 1;
-            Console.WriteLine("Searching for meaning of words ended.");
             Console.WriteLine("Category tree searching...");
             if (!CategoryTreeSearch())
                 return 2;
-            Console.WriteLine("Category tree searching ended.");
+            Console.WriteLine("Getting length of path...");
+            GetLength();
 
             return 0;
 
@@ -212,17 +210,14 @@ namespace WEDT
            return false;
        }
 
+
+       private void GetLength()
+       {
+           pathLength = Tree.GetLength(word1Tree) + Tree.GetLength(word2Tree);
+
+       }
+
+
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
 }

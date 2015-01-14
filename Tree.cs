@@ -29,16 +29,6 @@ namespace WEDT
                     children.AddFirst(new Tree(d));
             }
 
-
-            public Tree getChild(int i)
-            {
-                foreach (Tree n in children)
-                    if (--i == 0) return n;
-                return null;
-            }
-
-
-
             public Tree getChild(String s)
             {
                 foreach (Tree n in children)
@@ -60,6 +50,16 @@ namespace WEDT
                 tab += "-";
                 foreach (Tree kid in node.children)
                     print(kid, tab);
+            }
+
+            public static int GetLength(Tree node, int length = 0)
+            {         
+                foreach (Tree kid in node.children)
+                    GetLength(kid, length);
+
+                length += 1;
+
+                return length;
             }
 
             public static String FindCommon(Tree tree1, Tree tree2)
