@@ -102,9 +102,9 @@ namespace WEDT
            String word1Redirects = wrp.redirect(word1);
            String word2Redirects = wrp.redirect(word2);
 
-           if (word1Redirects == "")
+           if (word1Redirects == "" || word1Redirects == null)
                word1Redirects = word1;
-           if (word2Redirects == "")
+           if (word2Redirects == "" || word2Redirects == null)
                word2Redirects = word2;
 
            List<String> lexicalAssociationList1 = GetMeanings(word1Redirects);
@@ -177,11 +177,21 @@ namespace WEDT
            Console.WriteLine("\tCategoryTreeSearch:: 3 depth");
            foreach (Tree cat in word1Tree.children)
                foreach (Tree subCat in cat.children)
-                   word1Tree.getChild(subCat.data).addChilds(wcp.getSubcategories(subCat.data));
+               {
+                   String[] tab = wcp.getSubcategories(subCat.data);
+                   if (tab != null)
+                       cat.getChild(subCat.data).addChilds(tab);
+               }
+
 
            foreach (Tree cat in word2Tree.children)
                foreach (Tree subCat in cat.children)
-                   word2Tree.getChild(subCat.data).addChilds(wcp.getSubcategories(subCat.data));
+               {
+                   String[] tab = wcp.getSubcategories(subCat.data);
+                   if (tab != null)
+                       cat.getChild(subCat.data).addChilds(tab);
+               }
+
 
            if (common != "")
            {
@@ -194,12 +204,20 @@ namespace WEDT
            foreach (Tree cat in word1Tree.children)
                foreach (Tree subCat in cat.children)
                    foreach (Tree subsubCat in subCat.children)
-                       word1Tree.getChild(subsubCat.data).addChilds(wcp.getSubcategories(subsubCat.data));
+                   {
+                       String[] tab = wcp.getSubcategories(subsubCat.data);
+                       if (tab != null)
+                           subCat.getChild(subsubCat.data).addChilds(tab);
+                   }
 
            foreach (Tree cat in word2Tree.children)
                foreach (Tree subCat in cat.children)
                    foreach (Tree subsubCat in subCat.children)
-                       word2Tree.getChild(subsubCat.data).addChilds(wcp.getSubcategories(subsubCat.data));
+                   {
+                       String[] tab = wcp.getSubcategories(subsubCat.data);
+                       if (tab != null)
+                           subCat.getChild(subsubCat.data).addChilds(tab);
+                   }
 
            if (common != "")
            {

@@ -45,7 +45,7 @@ namespace WEDT.DataProvider
             var client = new WebClient();
             string url = "http://pl.wikipedia.org/w/api.php?format=json&action=query&titles="
                 + article
-                + "&prop=categories&cllimit=200";
+                + "&prop=categories&cllimit=200&continue";
             string html = client.DownloadString(url);
             dynamic json = System.Web.Helpers.Json.Decode(html).query.pages;
 
