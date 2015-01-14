@@ -77,7 +77,7 @@ namespace WEDT.DataProvider
         {
 
             List<String> list = new List<String>();
-
+            a = a.Replace(" ", "_");
             String strQuery;// = String.Format(strFormat, from);
             strQuery =
                 "select ?a{ <http://pl.dbpedia.org/resource/Kategoria:"
