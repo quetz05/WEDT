@@ -43,7 +43,9 @@ namespace WEDT.DataProvider
         {
             List<String> list = new List<string>();
             var client = new WebClient();
-            string url = "http://pl.wikipedia.org/w/api.php?format=json&action=query&titles=Albert%20Einstein&prop=categories&cllimit=200";
+            string url = "http://pl.wikipedia.org/w/api.php?format=json&action=query&titles="
+                + article
+                + "&prop=categories&cllimit=200";
             string html = client.DownloadString(url);
             dynamic json = System.Web.Helpers.Json.Decode(html).query.pages;
 

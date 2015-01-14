@@ -18,27 +18,35 @@ namespace WEDT.DataProvider
             store = new SparqlConnector(new Uri("http://pl.dbpedia.org/sparql"));
         }
 
-        public String[] pagelinks(String from)
+        public String[] pagelinksFrom(String from)
         {
-            return this.getList(from, "WikiLink").ToArray();
+            return this.getList(from, "WikiLink", false).ToArray();
+        }
+
+        public String[] pagelinksTo(String to)
+        {
+            return this.getList(to, "WikiLink", true).ToArray();
         }
 
         public String[] disambiguates(String from)
         {
-            return this.getList(from, "Disambiguates").ToArray();
+            return this.getList(from, "Disambiguates", false).ToArray();
         }
 
-        private List<String> getList(String a, String from)
+
+        private List<String> getList(String a, String from, bool reverse)
         {
 
             List<String> list = new List<String>();
 
             String strQuery;// = String.Format(strFormat, from);
-            strQuery = "SELECT * WHERE { <http://pl.dbpedia.org/resource/"
-                + DataPreparator.FirstCharToUpper(a)
-                + "> <http://dbpedia.org/ontology/wikiPage"
+            strQuery = "SELECT * WHERE {"
+                + (!reverse ? resource(a) : " ?a ")
+                + " <http://dbpedia.org/ontology/wikiPage"
                 + from
-                + "> ?a . }";
+                + "> "
+                + (reverse ? resource(a) : " ?a ")
+                + ". }";
             Object results = store.Query(strQuery);
             if (results is SparqlResultSet)
             {
@@ -57,6 +65,11 @@ namespace WEDT.DataProvider
             }
 
             return list;
+        }
+
+        private String resource(String name)
+        {
+            return "<http://pl.dbpedia.org/resource/" + DataPreparator.FirstCharToUpper(name) + ">";
         }
     }
 }

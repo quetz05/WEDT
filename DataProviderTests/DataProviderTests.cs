@@ -24,7 +24,7 @@ namespace DataProviderTests
         public void wikiPagelinksProviderTest()
         {
             WikiPagelinksProvider provider = new WikiPagelinksProvider();
-            List< String> links = provider.pagelinks("Alergologia");
+            List< String> links = new List<string> ( provider.pagelinksFrom("Alergologia"));
             Assert.AreEqual(6, links.Count);
             Assert.IsTrue(links.Contains("Alergen"));
             Assert.IsTrue(links.Contains("Alergia"));
@@ -33,7 +33,7 @@ namespace DataProviderTests
             Assert.IsTrue(links.Contains("Medycyna"));
             Assert.IsTrue(links.Contains("Leczenie"));
 
-            links = provider.pagelinks("alergologia");
+            links = new List<string> ( provider.pagelinksFrom("alergologia"));
             Assert.AreEqual(6, links.Count);
             Assert.IsTrue(links.Contains("Alergen"));
             Assert.IsTrue(links.Contains("Alergia"));
@@ -42,7 +42,23 @@ namespace DataProviderTests
             Assert.IsTrue(links.Contains("Medycyna"));
             Assert.IsTrue(links.Contains("Leczenie"));
 
-            links = provider.pagelinks("Alegogosdf");
+            links = new List<string> ( provider.pagelinksFrom("Alegogosdf"));
+            Assert.AreEqual(0, links.Count, "Pusta lista");
+
+        }
+
+        [TestMethod]
+        public void wikiPagelinksProviderToTest()
+        {
+            WikiPagelinksProvider provider = new WikiPagelinksProvider();
+            List<String> links = new List<string>(provider.pagelinksTo("Alergologia"));
+            Assert.AreEqual(22, links.Count);
+
+            Assert.IsTrue(links.Contains("Alergen"));
+            Assert.IsTrue(links.Contains("Alergia"));
+            Assert.IsTrue(links.Contains("Lekarz"));
+
+            links = new List<string>(provider.pagelinksFrom("Alegogosdf"));
             Assert.AreEqual(0, links.Count, "Pusta lista");
 
         }
@@ -51,7 +67,7 @@ namespace DataProviderTests
         public void wikiPagelinksProviderDisambiguatesTest()
         {
             WikiPagelinksProvider provider = new WikiPagelinksProvider();
-            List<String> links = provider.disambiguates("Al");
+            List<String> links = new List<string> ( provider.disambiguates("Al"));
             Assert.AreEqual(14, links.Count);
             Assert.IsTrue(links.Contains("Alabama"));
             Assert.IsTrue(links.Contains("Albania"));
@@ -62,13 +78,13 @@ namespace DataProviderTests
         public void wikiCategoryProviderSubcategoryTest()
         {
             WikiCategoryProvider provider = new WikiCategoryProvider();
-            List< String > subcategories = provider.getSubcategories("fizyka");
+            List< String > subcategories = new List<string> ( provider.getSubcategories("fizyka"));
             Assert.AreEqual(36, subcategories.Count);
 
             Assert.IsTrue(subcategories.Contains("Biofizyka"));
             Assert.IsTrue(subcategories.Contains("Fizycy"));
 
-            subcategories = provider.getSubcategories("adfwef");
+            subcategories = new List<string> ( provider.getSubcategories("adfwef"));
             Assert.AreEqual(0, subcategories.Count);
 
         }
@@ -77,12 +93,12 @@ namespace DataProviderTests
         public void wikiCategoryProviderCategoryTest()
         {
             WikiCategoryProvider provider = new WikiCategoryProvider();
-            List<String> subcategories = provider.getCategories("Albert Einstein");
+            List<String> subcategories = new List<string> ( provider.getCategories("Albert Einstein"));
             Assert.AreEqual(13, subcategories.Count);
             Assert.IsTrue(subcategories.Contains("Wykładowcy Uniwersytetu Humboldtów w Berlinie"));
             Assert.IsTrue(subcategories.Contains("Niemieccy socjaliści"));
 
-            subcategories = provider.getSubcategories("adfwef");
+            subcategories = new List<string> ( provider.getSubcategories("adfwef") );
             Assert.AreEqual(0, subcategories.Count);
         }
     }

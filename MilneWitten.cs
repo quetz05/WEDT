@@ -74,7 +74,7 @@ namespace WEDT
                 double value = 0;
                 if(ownLinks.Contains(link))
                     // TODO zmienić na poprawną funkcję
-                    value = Math.Log(amountLinks / wpp.pagelinks(link).Length);
+                    value = Math.Log(amountLinks / wpp.pagelinksFrom(link).Length);
 
                 vec.Add(value);
             }
