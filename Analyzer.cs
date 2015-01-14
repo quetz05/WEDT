@@ -15,7 +15,7 @@ namespace WEDT
             return 0.0;
         }
 
-        static public double lch()
+        static public double lch(double pl)
         {
 
 

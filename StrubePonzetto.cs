@@ -181,10 +181,10 @@ namespace WEDT
                foreach (Tree subCat in cat.children)
                {
                    String[] tab = wcp.getSubcategories(subCat.data);
-                   //String tab = wcp.getParcategories(subCat.data);
+                   //String[] tab = wcp.getParcategories(subCat.data);
                    if (tab != null)
                        cat.getChild(subCat.data).addChilds(tab);
-                       //cat.getChild(subCat.data).addChild(tab);
+                       //cat.getChild(subCat.data).addChilds(tab);
                }
 
 
@@ -192,10 +192,10 @@ namespace WEDT
                foreach (Tree subCat in cat.children)
                {
                    String[] tab = wcp.getSubcategories(subCat.data);
-                   //String tab = wcp.getParcategories(subCat.data);
+                   //String[] tab = wcp.getParcategories(subCat.data);
                    if (tab != null)
                        cat.getChild(subCat.data).addChilds(tab);
-                       //cat.getChild(subCat.data).addChild(tab);
+                       //cat.getChild(subCat.data).addChilds(tab);
                }
 
 
@@ -212,10 +212,10 @@ namespace WEDT
                    foreach (Tree subsubCat in subCat.children)
                    {
                        String[] tab = wcp.getSubcategories(subsubCat.data);
-                       //String tab = wcp.getParcategories(subsubCat.data);
+                       //String[] tab = wcp.getParcategories(subsubCat.data);
                        if (tab != null)
                            subCat.getChild(subsubCat.data).addChilds(tab);
-                            //subCat.getChild(subsubCat.data).addChild(tab);
+                            //subCat.getChild(subsubCat.data).addChilds(tab);
                    }
 
            foreach (Tree cat in word2Tree.children)
@@ -223,10 +223,10 @@ namespace WEDT
                    foreach (Tree subsubCat in subCat.children)
                    {
                        String[] tab = wcp.getSubcategories(subsubCat.data);
-                       //String tab = wcp.getParcategories(subsubCat.data);
+                       //String[] tab = wcp.getParcategories(subsubCat.data);
                        if (tab != null)
                            subCat.getChild(subsubCat.data).addChilds(tab);
-                            //subCat.getChild(subsubCat.data).addChild(tab);
+                            //subCat.getChild(subsubCat.data).addChilds(tab);
                    }
 
            if (common != "")

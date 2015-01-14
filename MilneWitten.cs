@@ -22,6 +22,9 @@ namespace WEDT
 
     }
 
+
+
+
     class MilneWitten
     {
         String word1;
@@ -31,10 +34,8 @@ namespace WEDT
         private WikiRedirectsProvider wrp;
         private WikiCategoryProvider wcp;
 
-
-        int word1Path;
-        int word2Path;
-        int amountLinks;
+        // pobrane w dniu 14.01.2015r.
+        const int amountLinks = 1086603;
 
         private String word1Meaning;
         private String word2Meaning;
@@ -47,11 +48,17 @@ namespace WEDT
             this.word1 = word1;
             this.word2 = word2;
 
-            word1Path = -1;
-            word2Path = -1;
 
-            // TODO Zmienić na prawdziwą wartość
-            amountLinks = 10000;
+        }
+
+
+        public int Run()
+        {
+
+
+
+
+            return 0;
         }
 
         private List<String> GetMeanings(String wordRedirect)
@@ -74,7 +81,7 @@ namespace WEDT
                 double value = 0;
                 if(ownLinks.Contains(link))
                     // TODO zmienić na poprawną funkcję
-                    value = Math.Log(amountLinks / wpp.pagelinksFrom(link).Length);
+                    value = Math.Log(amountLinks / wpp.pagelinksTo(link).Length);
 
                 vec.Add(value);
             }
