@@ -40,6 +40,10 @@ namespace WEDT
         private String word1Meaning;
         private String word2Meaning;
 
+        private String art1;
+        private String art2;
+
+
         public MilneWitten(String word1, String word2)
         {
             wpp = new WikiPagelinksProvider();
@@ -54,8 +58,9 @@ namespace WEDT
 
         public int Run()
         {
-
-
+            Console.WriteLine("--- Algorytm Strube-Ponzetto...");
+            Console.WriteLine("Poszukiwanie znaczenia słowa...");
+            ChooseMeaning();
 
 
             return 0;
@@ -80,7 +85,6 @@ namespace WEDT
             {
                 double value = 0;
                 if(ownLinks.Contains(link))
-                    // TODO zmienić na poprawną funkcję
                     value = Math.Log(amountLinks / wpp.pagelinksTo(link).Length);
 
                 vec.Add(value);
@@ -90,11 +94,13 @@ namespace WEDT
         }
 
 
-        // TODO NIE ROZUMIĘ JAK!!?
         private double GetCosinus(double a, double b)
         {
-            return 0.0;
-
+            // TODO poprawić jak cosinus ujemny
+            if (b != 0)
+                return Math.Cos(a / b) * 180.0 / Math.PI;
+            else
+                return 90;
 
         }
 
@@ -105,9 +111,9 @@ namespace WEDT
             String word1Redirects = wrp.redirect(word1);
             String word2Redirects = wrp.redirect(word2);
 
-            if (word1Redirects == "")
+            if (word1Redirects == "" || word1Redirects == null)
                 word1Redirects = word1;
-            if (word2Redirects == "")
+            if (word2Redirects == "" || word2Redirects == null)
                 word2Redirects = word2;
 
             List<String> lexicalAssociationList1 = GetMeanings(word1Redirects);
@@ -125,17 +131,33 @@ namespace WEDT
             List<double> vec1 = GetVector(lexicalAssociationList1, lexAssList);
             List<double> vec2 = GetVector(lexicalAssociationList2, lexAssList);
 
-            Dictionary<double, ArticlePair> cosVec = new Dictionary<double, ArticlePair>();
+            Dictionary<ArticlePair, double> cosVec = new Dictionary<ArticlePair, double>();
 
 
             // Step 1.75
            for (int i = 0; i<vec1.Count; i++)
                for (int j = 0; j<vec2.Count; j++)
                {
-                   cosVec.Add(GetCosinus(vec1[i], vec2[j]), new ArticlePair(i, j));
+                   cosVec.Add(new ArticlePair(i, j), GetCosinus(vec1[i], vec2[j]));
                }
 
-           var max = cosVec.Max();
+           double min = 90;
+           int index1 = 0, index2 = 0;
+
+           foreach(var el in cosVec)
+           {
+               if (el.Value < min)
+               {
+                   min = el.Value;
+                   index1 = el.Key.first;
+                   index2 = el.Key.second;
+               }
+           }
+
+           art1 = lexAssList.ToArray()[index1];
+           art2 = lexAssList.ToArray()[index2];
+
+       
 
           // ArticlePair articles = max.Value;
 

@@ -38,22 +38,22 @@ namespace WEDT
             wcp = new WikiCategoryProvider();
             trueWord1 = word1;
             trueWord2 = word2;
-            this.word1 = word1 + " (ujednoznacznienie)";
-            this.word2 = word2 + " (ujednoznacznienie)";
+            this.word1 = word1;
+            this.word2 = word2;
 
             pathLength = -1;
         }
 
         public int Run()
         {
-            Console.WriteLine("--- Beginning of Strube-Ponzetto Algorithm...");
-            Console.WriteLine("Searching for meaning of words...");
+            Console.WriteLine("--- Algorytm Strube-Ponzetto...");
+            Console.WriteLine("Poszukiwanie znaczenia słowa...");
             if (!ChooseMeaning())
                 return 1;
-            Console.WriteLine("Category tree searching...");
+            Console.WriteLine("Przeszukiwanie drzewa kategorii...");
             if (!CategoryTreeSearch())
                 return 2;
-            Console.WriteLine("Getting length of path...");
+            Console.WriteLine("Pobieranie długości ścieżki...");
             GetLength();
 
             return 0;
@@ -113,6 +113,18 @@ namespace WEDT
 
            List<String> lexicalAssociationList1 = GetMeanings(word1Redirects);
            List<String> lexicalAssociationList2 = GetMeanings(word2Redirects);
+
+           //if(lexicalAssociationList1.Count == 0)
+           //{
+           //    word1Redirects += " (ujednoznacznienie)";
+           //    lexicalAssociationList1 = GetMeanings(word1Redirects);
+           //}
+
+           //if (lexicalAssociationList2.Count == 0)
+           //{
+           //    word1Redirects += " (ujednoznacznienie)";
+           //    lexicalAssociationList2 = GetMeanings(word2Redirects);
+           //}
 
            List<String> lexicalCroppedList1 = GetCroppedMeanings(lexicalAssociationList1.ToArray());
            List<String> lexicalCroppedList2 = GetCroppedMeanings(lexicalAssociationList2.ToArray());
