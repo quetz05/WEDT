@@ -27,7 +27,7 @@ namespace WEDT
         Tree word1Tree;
         Tree word2Tree;
 
-        int pathLength;
+        public int pathLength;
 
         const int maxCategoryDepth = 4;
 
@@ -55,6 +55,7 @@ namespace WEDT
                 return 2;
             Console.WriteLine("Pobieranie długości ścieżki...");
             GetLength();
+            
 
             return 0;
 
@@ -258,16 +259,31 @@ namespace WEDT
 
            return false;
        }
+       
+       // zwraca podobieństwo od 0 - 10 (0 - niepołączone; 10 - to samo słowo)
+       public int GetSimilarity()
+       {
+           switch(pathLength)
+           {
+               case 0: return 10;
+               case 1: return 9;
+               case 2: return 8;
+               case 3: return 7;
+               case 4: return 6;
+               case 5: return 5;
+               case 6: return 4;
+               case 7: return 2;
+               case 8: return 1;
+               case -1: return 0;
+               default: return -1;
+           }
+
+       }
 
 
        private void GetLength()
        {
            pathLength = Tree.GetLength(word1Tree) + Tree.GetLength(word2Tree);
-
-           Console.WriteLine("");
-           Console.WriteLine("Wspólna kategoria (" + trueWord1 + ", " + trueWord2 + "): " + commonCategory);
-           Console.WriteLine("Długość ścieżki wynosi: " + pathLength);
-
        }
 
 
