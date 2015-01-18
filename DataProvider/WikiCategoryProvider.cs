@@ -60,6 +60,9 @@ namespace WEDT.DataProvider
             { // enumerating over it exposes the Properties and Values as a KeyValuePair
               //  Console.WriteLine("{0} = {1}", kvp.Key, kvp.Value);
                 dynamic categories = kvp.Value.categories;
+                if (categories == null)
+                    continue;
+
                 int l = Enumerable.Count(categories);
                 for (int i = 0; i < l; ++i)
                 {
