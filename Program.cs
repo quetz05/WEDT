@@ -49,7 +49,7 @@ namespace WEDT
             String finishKey = "";
 
 
-            while (finishKey != "0")
+            while (finishKey != "9")
             {
                 algo = "";
                 while (algo != "0" && algo != "1" && algo != "2")
@@ -84,7 +84,7 @@ namespace WEDT
                 Console.WriteLine("");
                 Console.WriteLine("");
 
-                Console.WriteLine("Jeśli chcesz zakończyć program kliknij 0 (w przeciwnym wpisz cokolwiek):");
+                Console.WriteLine("Jeśli chcesz zakończyć program kliknij 9 (w przeciwnym wpisz cokolwiek):");
                 finishKey = Console.ReadLine();
                 Console.WriteLine("");
                 Console.WriteLine("");

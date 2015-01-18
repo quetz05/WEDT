@@ -166,6 +166,13 @@ namespace WEDT
            String[] word1Categories = wcp.getCategories(word1Meaning);
            String[] word2Categories = wcp.getCategories(word2Meaning);
            
+
+           if(word2Meaning == word1Meaning)
+           {
+               pathLength = 0;
+               return true;
+           }
+
            // 1 - depth
            Console.WriteLine("\tCategoryTreeSearch:: 1 depth");
            word1Tree.addChilds(word1Categories);
@@ -286,6 +293,11 @@ namespace WEDT
 
        private void GetLength()
        {
+           if (word1Meaning == word2Meaning)
+           {
+               pathLength = 0;
+               return;
+           }
            pathLength = Tree.GetLength(word1Tree) + Tree.GetLength(word2Tree);
        }
 
