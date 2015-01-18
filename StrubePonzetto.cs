@@ -55,8 +55,8 @@ namespace WEDT
                 return 2;
             Console.WriteLine("Pobieranie długości ścieżki...");
             GetLength();
-            
-
+            Console.WriteLine("pl: " + Analyzer.pl(pathLength));
+            Console.WriteLine("lch: "+ Analyzer.lch(pathLength));
             return 0;
 
         }

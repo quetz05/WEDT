@@ -51,15 +51,19 @@ namespace WEDT
 
             while (finishKey != "0")
             {
+                algo = "";
                 while (algo != "0" && algo != "1" && algo != "2")
                 {
                     Console.WriteLine("Ktorego algorytmu chcesz uzyc? Wpisz odpowiedni numer");
                     Console.WriteLine("(0) Oba algorytmy");
                     Console.WriteLine("(1) Strube & Ponzetto");
                     Console.WriteLine("(2) Milne & Witten");
+                    Console.WriteLine("(9) Koniec programu");
                     algo = Console.ReadLine();
 
-                    if (algo != "0" && algo != "1" && algo != "2")
+                    if (algo == "9")
+                        return;
+                    else if (algo != "0" && algo != "1" && algo != "2")
                         Console.WriteLine("Wpisz poprawna wartosc!");
                     Console.WriteLine();
                 }

@@ -8,18 +8,14 @@ namespace WEDT
 {
     class Analyzer
     {
-        static public double pl()
+        static public double pl(int length)
         {
-
-
-            return 0.0;
+            return length;
         }
 
-        static public double lch(double pl)
+        static public double lch(int pl, int maxDepth = 4)
         {
-
-
-            return 0.0;
+            return -Math.Log(pl/2*maxDepth);
         }
 
         static public double res()

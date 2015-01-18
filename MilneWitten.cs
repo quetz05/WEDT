@@ -37,9 +37,6 @@ namespace WEDT
         // pobrane w dniu 14.01.2015r.
         const int amountLinks = 1086603;
 
-        private String word1Meaning;
-        private String word2Meaning;
-
         private String art1;
         private String art2;
 
