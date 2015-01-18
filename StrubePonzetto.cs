@@ -107,25 +107,28 @@ namespace WEDT
            String word1Redirects = wrp.redirect(word1);
            String word2Redirects = wrp.redirect(word2);
 
+           // sprawdzenie przekierowania
            if (word1Redirects == "" || word1Redirects == null)
                word1Redirects = word1;
            if (word2Redirects == "" || word2Redirects == null)
                word2Redirects = word2;
 
-           List<String> lexicalAssociationList1 = GetMeanings(word1Redirects);
-           List<String> lexicalAssociationList2 = GetMeanings(word2Redirects);
+           // sprawdzenie ujednoznacznienia
+           String word1Disam = word1 + " (ujednoznacznienie)";
+           String word2Disam = word2 + " (ujednoznacznienie)";
 
-           //if(lexicalAssociationList1.Count == 0)
-           //{
-           //    word1Redirects += " (ujednoznacznienie)";
-           //    lexicalAssociationList1 = GetMeanings(word1Redirects);
-           //}
+           List<String> lexicalAssociationList1 = GetMeanings(word1Disam);
+           List<String> lexicalAssociationList2 = GetMeanings(word2Disam);
 
-           //if (lexicalAssociationList2.Count == 0)
-           //{
-           //    word1Redirects += " (ujednoznacznienie)";
-           //    lexicalAssociationList2 = GetMeanings(word2Redirects);
-           //}
+           if (lexicalAssociationList1.Count == 0)
+           {
+               lexicalAssociationList1 = GetMeanings(word1Redirects);
+           }
+
+           if (lexicalAssociationList2.Count == 0)
+           {
+               lexicalAssociationList2 = GetMeanings(word2Redirects);
+           }
 
            List<String> lexicalCroppedList1 = GetCroppedMeanings(lexicalAssociationList1.ToArray());
            List<String> lexicalCroppedList2 = GetCroppedMeanings(lexicalAssociationList2.ToArray());
@@ -253,9 +256,9 @@ namespace WEDT
            }
 
 
-           Tree.print(word1Tree);
-           Console.WriteLine(" ");
-           Tree.print(word2Tree);
+           //Tree.print(word1Tree);
+           //Console.WriteLine(" ");
+           //Tree.print(word2Tree);
 
            return false;
        }

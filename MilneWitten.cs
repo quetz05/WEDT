@@ -111,13 +111,31 @@ namespace WEDT
             String word1Redirects = wrp.redirect(word1);
             String word2Redirects = wrp.redirect(word2);
 
+            // sprawdzenie przekierowania
             if (word1Redirects == "" || word1Redirects == null)
                 word1Redirects = word1;
             if (word2Redirects == "" || word2Redirects == null)
                 word2Redirects = word2;
 
-            List<String> lexicalAssociationList1 = GetMeanings(word1Redirects);
-            List<String> lexicalAssociationList2 = GetMeanings(word2Redirects);
+            // sprawdzenie ujednoznacznienia
+            String word1Disam = word1 + " (ujednoznacznienie)";
+            String word2Disam = word2 + " (ujednoznacznienie)";
+
+
+            List<String> lexicalAssociationList1 = GetMeanings(word1Disam);
+            List<String> lexicalAssociationList2 = GetMeanings(word2Disam);
+
+            if (lexicalAssociationList1.Count == 0)
+            {
+                lexicalAssociationList1 = GetMeanings(word1Redirects);
+            }
+
+            if (lexicalAssociationList2.Count == 0)
+            {
+                lexicalAssociationList2 = GetMeanings(word2Redirects);
+            }
+
+
             List<String> lexAssList = new List<String>();
 
             foreach (String w in lexicalAssociationList1)
@@ -130,6 +148,9 @@ namespace WEDT
            //Step 1.5
             List<double> vec1 = GetVector(lexicalAssociationList1, lexAssList);
             List<double> vec2 = GetVector(lexicalAssociationList2, lexAssList);
+
+            if (lexAssList.Count == 0)
+                return false;
 
             Dictionary<ArticlePair, double> cosVec = new Dictionary<ArticlePair, double>();
 

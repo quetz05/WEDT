@@ -86,14 +86,6 @@ namespace WEDT
                 Console.WriteLine("");
             }
 
-
-
-
-
-            Console.WriteLine("Koniec programu (kliknij dowolny klawisz)...");
-
-            Console.ReadLine();
-
         }
     }
 }
