@@ -54,7 +54,15 @@ namespace WEDT.DataProvider
                 + article
                 + "&prop=categories&cllimit=200&continue";
             string html = client.DownloadString(url);
-            dynamic json = System.Web.Helpers.Json.Decode(html).query.pages;
+            dynamic json;
+            try
+            {
+                json = System.Web.Helpers.Json.Decode(html).query.pages;
+            }
+            catch
+            {
+                return null;
+            } 
 
             foreach (KeyValuePair<string, dynamic> kvp in json)
             { // enumerating over it exposes the Properties and Values as a KeyValuePair
