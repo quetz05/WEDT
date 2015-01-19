@@ -15,21 +15,21 @@ namespace WEDT
         public String word1;
         public String word2;
 
-        private String word1Meaning;
-        private String word2Meaning;
+        protected String word1Meaning;
+        protected String word2Meaning;
 
-        private WikiPagelinksProvider wpp;
-        private WikiRedirectsProvider wrp;
-        private WikiCategoryProvider wcp;
+        protected WikiPagelinksProvider wpp;
+        protected WikiRedirectsProvider wrp;
+        protected WikiCategoryProvider wcp;
 
-        String commonCategory;
+        protected String commonCategory;
 
-        Tree word1Tree;
-        Tree word2Tree;
+        protected Tree word1Tree;
+        protected Tree word2Tree;
 
         public int pathLength;
 
-        const int maxCategoryDepth = 4;
+        protected const int maxCategoryDepth = 4;
 
         public StrubePonzetto(String word1, String word2)
         {
@@ -44,7 +44,7 @@ namespace WEDT
             pathLength = -1;
         }
 
-        public int Run()
+        virtual public int Run()
         {
             Console.WriteLine("--- Algorytm Strube-Ponzetto...");
             Console.WriteLine("Poszukiwanie znaczenia słowa...");
@@ -61,7 +61,7 @@ namespace WEDT
 
         }
 
-       private List<String> GetMeanings(String wordRedirect)
+       protected List<String> GetMeanings(String wordRedirect)
        {
            List<String> lexicalAssociationList = new List<String>();
            String[] ambiguous = wpp.disambiguates(wordRedirect);
@@ -72,7 +72,7 @@ namespace WEDT
            return lexicalAssociationList;
        }
 
-       private List<String> GetCroppedMeanings(String[] Array)
+       protected List<String> GetCroppedMeanings(String[] Array)
        {
            List<String> croppedWordList = new List<String>();
 
@@ -91,7 +91,7 @@ namespace WEDT
            return croppedWordList;
        }
 
-       String FindWord(String chars, List<String> array)
+       protected String FindWord(String chars, List<String> array)
        {
            foreach (String w in array)
                if (w.Contains(chars))
@@ -101,7 +101,7 @@ namespace WEDT
        }
 
        // Step 1
-       private bool ChooseMeaning()
+       virtual protected bool ChooseMeaning()
        {
 
            String word1Redirects = wrp.redirect(word1);
@@ -129,6 +129,9 @@ namespace WEDT
            {
                lexicalAssociationList2 = GetMeanings(word2Redirects);
            }
+
+           //lexicalAssociationList1.Sort();
+           //lexicalAssociationList2.Sort();
 
            List<String> lexicalCroppedList1 = GetCroppedMeanings(lexicalAssociationList1.ToArray());
            List<String> lexicalCroppedList2 = GetCroppedMeanings(lexicalAssociationList2.ToArray());
@@ -158,7 +161,7 @@ namespace WEDT
        }
 
        // Step 2
-       private bool CategoryTreeSearch()
+       protected bool CategoryTreeSearch()
        {
            word1Tree = new Tree(word1Meaning);
            word2Tree = new Tree(word2Meaning);
@@ -262,6 +265,38 @@ namespace WEDT
                return true;
            }
 
+           //// 5 - depth
+           //Console.WriteLine("\tCategoryTreeSearch:: 5 depth");
+           //foreach (Tree cat in word1Tree.children)
+           //    foreach (Tree subCat in cat.children)
+           //        foreach (Tree subsubCat in subCat.children)
+           //            foreach (Tree subsubsubCat in subsubCat.children)
+           //            {
+           //                //String[] tab = wcp.getSubcategories(subsubCat.data);
+           //                String[] tab = wcp.getUbercategory(subsubsubCat.data);
+           //                if (tab != null)
+           //                    //subCat.getChild(subsubCat.data).addChilds(tab);
+           //                    subsubCat.getChild(subsubsubCat.data).addChilds(tab);
+           //            }
+
+           //foreach (Tree cat in word2Tree.children)
+           //    foreach (Tree subCat in cat.children)
+           //        foreach (Tree subsubCat in subCat.children)
+           //            foreach (Tree subsubsubCat in subsubCat.children)
+           //            {
+           //                //String[] tab = wcp.getSubcategories(subsubCat.data);
+           //                String[] tab = wcp.getUbercategory(subsubsubCat.data);
+           //                if (tab != null)
+           //                    //subCat.getChild(subsubCat.data).addChilds(tab);
+           //                    subsubCat.getChild(subsubsubCat.data).addChilds(tab);
+           //            }
+
+           //if (common != "")
+           //{
+           //    commonCategory = common;
+           //    return true;
+           //}
+
 
            //Tree.print(word1Tree);
            //Console.WriteLine(" ");
@@ -291,7 +326,7 @@ namespace WEDT
        }
 
 
-       private void GetLength()
+       protected void GetLength()
        {
            if (word1Meaning == word2Meaning)
            {

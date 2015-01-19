@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Analyzer.cs" />
     <Compile Include="MilneWitten.cs" />
+    <Compile Include="StrubePonzettoOur.cs" />
     <Compile Include="StrubePonzetto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

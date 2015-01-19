@@ -42,6 +42,20 @@ namespace WEDT
 
         }
 
+        static void Algo3(String word1, String word2)
+        {
+            // SP
+            StrubePonzettoOur sp = new StrubePonzettoOur(word1, word2);
+
+            int result = sp.Run();
+
+            if (result == 1)
+                Console.WriteLine("Brak jednego ze słów w bazie!");
+
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+
 
         static void Main(string[] args)
         {
@@ -52,18 +66,19 @@ namespace WEDT
             while (finishKey != "9")
             {
                 algo = "";
-                while (algo != "0" && algo != "1" && algo != "2")
+                while (algo != "0" && algo != "1" && algo != "2" && algo != "3")
                 {
                     Console.WriteLine("Ktorego algorytmu chcesz uzyc? Wpisz odpowiedni numer");
-                    Console.WriteLine("(0) Oba algorytmy");
+                    Console.WriteLine("(0) Wszystkie algorytmy");
                     Console.WriteLine("(1) Strube & Ponzetto");
                     Console.WriteLine("(2) Milne & Witten");
+                    Console.WriteLine("(3) Strube & Ponzetto - ulepszony");
                     Console.WriteLine("(9) Koniec programu");
                     algo = Console.ReadLine();
 
                     if (algo == "9")
                         return;
-                    else if (algo != "0" && algo != "1" && algo != "2")
+                    else if (algo != "0" && algo != "1" && algo != "2" && algo != "3")
                         Console.WriteLine("Wpisz poprawna wartosc!");
                     Console.WriteLine();
                 }
@@ -75,9 +90,10 @@ namespace WEDT
 
                 switch (algo)
                 {
-                    case "0": Algo1(word1, word2); Algo2(word1, word2); break;
+                    case "0": Algo1(word1, word2); Algo2(word1, word2); Algo3(word1, word2); break;
                     case "1": Algo1(word1, word2); break;
                     case "2": Algo2(word1, word2); break;
+                    case "3": Algo3(word1, word2); break;
                     default: Console.WriteLine("BLAD!!"); break;
                 }
 
