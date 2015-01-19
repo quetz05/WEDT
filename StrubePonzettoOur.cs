@@ -13,8 +13,6 @@ namespace WEDT
 
         }
 
-        protected List<String> Meanings;
-
 
         override public int Run()
         {
@@ -22,13 +20,7 @@ namespace WEDT
             Console.WriteLine("Poszukiwanie znaczenia słowa...");
             if (!ChooseMeaning())
                 return 1;
-            Console.WriteLine("Przeszukiwanie drzewa kategorii...");
-            if (!CategoryTreeSearch())
-                return 2;
-            Console.WriteLine("Pobieranie długości ścieżki...");
-            GetLength();
-            Console.WriteLine("pl: " + Analyzer.pl(pathLength));
-            Console.WriteLine("lch: " + Analyzer.lch(pathLength));
+
             return 0;
 
         }
@@ -63,6 +55,16 @@ namespace WEDT
             if (lexicalAssociationList2.Count == 0)
             {
                 lexicalAssociationList2 = GetMeanings(word2Redirects);
+            }
+
+            if (lexicalAssociationList1.Count == 0)
+            {
+                lexicalAssociationList1.Add(word1Redirects);
+            }
+
+            if (lexicalAssociationList2.Count == 0)
+            {
+                lexicalAssociationList2.Add(word2Redirects);
             }
 
 
@@ -144,7 +146,7 @@ namespace WEDT
                         cat.getChild(subCat.data).addChilds(tab);
                 }
 
-
+            common = Tree.FindCommon(word1Tree, word2Tree);
             if (common != "")
             {
                 commonCategory = common;
@@ -173,6 +175,8 @@ namespace WEDT
                             //subCat.getChild(subsubCat.data).addChilds(tab);
                             subCat.getChild(subsubCat.data).addChilds(tab);
                     }
+
+            common = Tree.FindCommon(word1Tree, word2Tree);
 
             if (common != "")
             {
