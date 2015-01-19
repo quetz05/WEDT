@@ -54,7 +54,7 @@ namespace WEDT
             if (!CategoryTreeSearch())
                 return 2;
             Console.WriteLine("Pobieranie długości ścieżki...");
-            GetLength();
+            GetLength(commonCategory);
             Console.WriteLine("pl: " + Analyzer.pl(pathLength));
             Console.WriteLine("lch: "+ Analyzer.lch(pathLength));
             return 0;
@@ -325,15 +325,48 @@ namespace WEDT
 
        }
 
+       protected int GetLength(Tree tree, String word)
+       {
+           if (tree.data == word)
+               return 0;
 
-       protected void GetLength()
+
+           foreach (Tree cat in tree.children)
+               if (cat.data == word)
+                   return 1;
+
+           foreach (Tree cat in tree.children)
+               foreach (Tree subCat in cat.children)
+                   if (subCat.data == word)
+                       return 2;
+
+           foreach (Tree cat in tree.children)
+               foreach (Tree subCat in cat.children)
+                   foreach (Tree subsubCat in subCat.children)
+                       if (subsubCat.data == word)
+                           return 3;
+
+
+           foreach (Tree cat in tree.children)
+               foreach (Tree subCat in cat.children)
+                   foreach (Tree subsubCat in subCat.children)
+                       foreach (Tree subsubsubCat in subsubCat.children)
+                           if (subsubsubCat.data == word)
+                               return 4;
+
+           return -1;
+
+       }
+
+
+       protected void GetLength(String common)
        {
            if (word1Meaning == word2Meaning)
            {
                pathLength = 0;
                return;
            }
-           pathLength = Tree.GetLength(word1Tree) + Tree.GetLength(word2Tree);
+           pathLength = GetLength(word1Tree, common) + GetLength(word2Tree, common);
        }
 
 

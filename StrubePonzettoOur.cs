@@ -94,7 +94,7 @@ namespace WEDT
             if (w1 == w2)
             {
                 pathLength = 0;
-                return GetLength(word1Tree, word2Tree);
+                return pathLength;
             }
 
             // 1 - depth
@@ -103,8 +103,9 @@ namespace WEDT
             String common = Tree.FindCommon(word1Tree, word2Tree);
             if (common != "")
             {
+                pathLength = -1;
                 commonCategory = common;
-                return GetLength(word1Tree, word2Tree);
+                return GetLength(word1Tree, common) + GetLength(word2Tree, common);
             }
 
             // 2 - depth
@@ -121,7 +122,7 @@ namespace WEDT
             if (common != "")
             {
                 commonCategory = common;
-                return GetLength(word1Tree, word2Tree);
+                return GetLength(word1Tree, common) + GetLength(word2Tree, common);
             }
 
             // 3 - depth
@@ -150,7 +151,7 @@ namespace WEDT
             if (common != "")
             {
                 commonCategory = common;
-                return GetLength(word1Tree, word2Tree);
+                return GetLength(word1Tree, common) + GetLength(word2Tree, common);
             }
 
             // 4 - depth
@@ -181,22 +182,53 @@ namespace WEDT
             if (common != "")
             {
                 commonCategory = common;
-                return GetLength(word1Tree, word2Tree);
+                return GetLength(word1Tree, common) + GetLength(word2Tree, common);
             }
 
             return -1;
         }
 
-        protected int GetLength(Tree w1, Tree w2)
-        {
-            if (w1.data == w2.data)
-            {
-                return 0;
-            }
-            return Tree.GetLength(w1) + Tree.GetLength(w2);
-        }
+        //protected int GetLength(Tree w1, Tree w2)
+        //{
+        //    if (w1.data == w2.data)
+        //    {
+        //        return 0;
+        //    }
+        //    return Tree.GetLength(w1) + Tree.GetLength(w2);
+        //}
 
+        //protected int GetLength(Tree tree, String word)
+        //{
+        //    if(tree.data == word)
+        //        return 0;
+            
 
+        //    foreach (Tree cat in tree.children)
+        //        if(cat.data == word)
+        //            return 1;
+
+        //    foreach (Tree cat in tree.children)
+        //        foreach (Tree subCat in cat.children)
+        //            if(subCat.data == word)
+        //                return 2;
+
+        //    foreach (Tree cat in tree.children)
+        //        foreach (Tree subCat in cat.children)
+        //            foreach (Tree subsubCat in subCat.children)
+        //                if(subsubCat.data == word)
+        //                    return 3;
+                   
+ 
+        //    foreach (Tree cat in tree.children)
+        //        foreach (Tree subCat in cat.children)
+        //            foreach (Tree subsubCat in subCat.children)
+        //                foreach (Tree subsubsubCat in subsubCat.children)
+        //                    if (subsubsubCat.data == word)
+        //                        return 4;
+
+        //    return -1;
+
+        //}
 
     }
 }

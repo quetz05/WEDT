@@ -62,15 +62,22 @@ namespace WEDT
                 return length;
             }
 
-            public static String FindCommon(Tree tree1, Tree tree2)
+            public static String FindCommon(Tree tree1, Tree tree2, String word = "")
             {
                 foreach (Tree kid in tree1.children)
                 {
                     if (Traverse(kid.data, tree2) != "")
-                        return kid.data;
-
-                    if (FindCommon(kid, tree2) != "")
-                        return kid.data;
+                    {
+                        if (word == "")
+                            word = kid.data;
+                        return word;
+                    }
+                        
+                    String w = FindCommon(kid, tree2, word);
+                    if (w != "")
+                    {
+                        return w;
+                    }
                 }
 
                 return "";
