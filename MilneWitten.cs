@@ -39,7 +39,7 @@ namespace WEDT
 
         public int Run()
         {
-            Console.WriteLine("--- Algorytm Milne-Witten...");
+            Console.WriteLine("--- Algorytm Milne-Witten (" + word1 + "," + word2 + ")");
             ChooseMeaning();
 
 
@@ -124,7 +124,7 @@ namespace WEDT
 
             if(intersected.Length == 0)
             {
-                Cosinus = 90;
+                Cosinus = 0;
                 return true;
             }
 
@@ -150,7 +150,7 @@ namespace WEDT
         }
 
 
-        public void ClassifyWords()
+        public String ClassifyWords()
         {
             Classify c = Classify.NotConnected;
 
@@ -167,7 +167,7 @@ namespace WEDT
             else
                 c = Classify.StrongConnected;
 
-            Analyzer.PrintConnection(c);
+            return Analyzer.PrintConnection(c);
         }
 
     }

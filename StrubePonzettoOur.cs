@@ -19,7 +19,7 @@ namespace WEDT
 
         override public int Run()
         {
-            Console.WriteLine("--- Algorytm Strube-Ponzetto - OUR...");
+            Console.WriteLine("--- Algorytm Strube-Ponzetto - ulepszony ("+word1 + "," + word2+")");
             Console.WriteLine("Poszukiwanie znaczenia słowa...");
             if (!ChooseMeaning())
                 return 1;
@@ -203,7 +203,7 @@ namespace WEDT
             return -1;
         }
 
-        public override void ClassifyWords()
+        public override String ClassifyWords()
         {
             int p = lengthList.ToArray().Max();
             Classify c = Classify.NotConnected;
@@ -221,7 +221,9 @@ namespace WEDT
             else
                 c = Classify.WeakConnected;
 
-            Analyzer.PrintConnection(c);
+            return Analyzer.PrintConnection(c);
+
+            
         }
     }
 }

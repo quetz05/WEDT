@@ -46,7 +46,7 @@ namespace WEDT
 
         virtual public int Run()
         {
-            Console.WriteLine("--- Algorytm Strube-Ponzetto...");
+            Console.WriteLine("--- Algorytm Strube-Ponzetto ("+word1 + "," + word2+")");
             Console.WriteLine("Poszukiwanie znaczenia słowa...");
             if (!ChooseMeaning())
                 return 1;
@@ -187,10 +187,25 @@ namespace WEDT
            // 2 - depth
            Console.WriteLine("\tCategoryTreeSearch:: 2 depth");
            foreach (String cat1 in word1Categories)
-               word1Tree.getChild(cat1).addChilds(wcp.getUbercategory(cat1).ToArray());
+           {
+
+               List<String> tab = wcp.getUbercategory(cat1);
+               Tree child = word1Tree.getChild(cat1);
+               if (tab != null && child != null)
+                   child.addChilds(tab.ToArray());
+
+           }
 
            foreach (String cat2 in word2Categories)
-               word2Tree.getChild(cat2).addChilds(wcp.getUbercategory(cat2).ToArray());
+           {
+
+               List<String> tab = wcp.getUbercategory(cat2);
+               Tree child = word2Tree.getChild(cat2);
+               if (tab != null && child != null)
+                   child.addChilds(tab.ToArray());
+           }
+               //if (cat2 != null)
+               //     word2Tree.getChild(cat2).addChilds(wcp.getUbercategory(cat2).ToArray());
 
            common = Tree.FindCommon(word1Tree, word2Tree);
 
@@ -205,18 +220,20 @@ namespace WEDT
            foreach (Tree cat in word1Tree.children)
                foreach (Tree subCat in cat.children)
                {
-                   String[] tab = wcp.getUbercategory(subCat.data).ToArray();
-                   if (tab != null)
-                       cat.getChild(subCat.data).addChilds(tab);
+                   List<String> tab = wcp.getUbercategory(subCat.data);
+                   Tree child = subCat.getChild(subCat.data);
+                   if (tab != null && child != null)
+                       child.addChilds(tab.ToArray());
                }
 
 
            foreach (Tree cat in word2Tree.children)
                foreach (Tree subCat in cat.children)
                {
-                   String[] tab = wcp.getUbercategory(subCat.data).ToArray();
-                   if (tab != null)
-                       cat.getChild(subCat.data).addChilds(tab);
+                   List<String> tab = wcp.getUbercategory(subCat.data);
+                   Tree child = subCat.getChild(subCat.data);
+                   if (tab != null && child != null)
+                       child.addChilds(tab.ToArray());
                }
 
 
@@ -232,18 +249,20 @@ namespace WEDT
                foreach (Tree subCat in cat.children)
                    foreach (Tree subsubCat in subCat.children)
                    {
-                       String[] tab = wcp.getUbercategory(subsubCat.data).ToArray();
-                       if (tab != null)
-                            subCat.getChild(subsubCat.data).addChilds(tab);
+                       List<String> tab = wcp.getUbercategory(subsubCat.data);
+                       Tree child = subCat.getChild(subsubCat.data);
+                       if (tab != null && child != null)
+                           child.addChilds(tab.ToArray());
                    }
 
            foreach (Tree cat in word2Tree.children)
                foreach (Tree subCat in cat.children)
                    foreach (Tree subsubCat in subCat.children)
                    {
-                       String[] tab = wcp.getUbercategory(subsubCat.data).ToArray();
-                       if (tab != null)
-                            subCat.getChild(subsubCat.data).addChilds(tab);
+                       List<String> tab = wcp.getUbercategory(subsubCat.data);
+                       Tree child = subCat.getChild(subsubCat.data);
+                       if (tab != null && child != null)
+                           child.addChilds(tab.ToArray());
                    }
 
            if (common != "")
@@ -320,7 +339,7 @@ namespace WEDT
        }
 
 
-       public virtual void ClassifyWords()
+       public virtual String ClassifyWords()
        {
            int p = pathLength;
            Classify c = Classify.NotConnected;
@@ -338,7 +357,7 @@ namespace WEDT
            else
                c = Classify.WeakConnected;
 
-           Analyzer.PrintConnection(c);
+           return Analyzer.PrintConnection(c);
        }
 
 

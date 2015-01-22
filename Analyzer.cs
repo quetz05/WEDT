@@ -18,22 +18,22 @@ namespace WEDT
 
     class Analyzer
     {
-        static public void PrintConnection(Classify c)
+        static public String PrintConnection(Classify c)
         {
             switch (c)
             {
                 case Classify.NotConnected:
-                    Console.WriteLine("Brak powiązania"); break;
+                    Console.WriteLine("Brak powiązania"); return "Brak powiązania";
                 case Classify.WeakConnected:
-                    Console.WriteLine("Słabe powiązanie"); break;
+                    Console.WriteLine("Słabe powiązanie"); return "Słabe powiązanie";
                 case Classify.MediumConnected:
-                    Console.WriteLine("Średnie powiązanie"); break;
+                    Console.WriteLine("Średnie powiązanie"); return "Średnie powiązanie";
                 case Classify.StrongConnected:
-                    Console.WriteLine("Silne powiązanie"); break;
+                    Console.WriteLine("Silne powiązanie"); return "Silne powiązanie";
                 case Classify.TheSame:
-                    Console.WriteLine("To samo"); break;
+                    Console.WriteLine("To samo"); return "To samo";
                 default:
-                    Console.WriteLine("Brak powiązania"); break;
+                    Console.WriteLine("Brak powiązania"); return "Brak powiązania";
             }
         }
 
