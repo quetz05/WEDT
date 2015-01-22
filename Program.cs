@@ -90,7 +90,7 @@ namespace WEDT
             Console.WriteLine();
             Console.WriteLine();
            // File.WriteAllLines(fileName, null);
-            String toFile = word1 + ";" + word2 + ";" + sp.lengthList.ToArray().Max() + ";" + c + ";" + interval.Milliseconds + Environment.NewLine;
+            String toFile = word1 + ";" + word2 + ";" + sp.lengthList.ToArray().Max() + ";" + c + ";" + interval.Milliseconds;
             TextWriter tw = new StreamWriter(fileName, true);
             tw.WriteLine(toFile);
             tw.Close();
@@ -113,6 +113,8 @@ namespace WEDT
                     algo = "";
                     while (algo != "1" && algo != "2" && algo != "3")
                     {
+                        Console.WriteLine("_______________________________________________________________________");
+                        Console.WriteLine();
                         Console.WriteLine("(plik wejściowy - " + inFile + "; plik wyjściowy - " + outFile + ")");
                         Console.WriteLine();
                         Console.WriteLine("Ktorego algorytmu chcesz uzyc? Wpisz odpowiedni numer i kliknij ENTER.");
