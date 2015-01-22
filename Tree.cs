@@ -36,14 +36,6 @@ namespace WEDT
                 return null;
             }
 
-            //public void traverse(Tree node, TreeVisitor visitor)
-            //{
-            //    visitor(node.data);
-            //    foreach (Tree kid in node.children)
-            //        traverse(kid, visitor);
-            //}
-
-
             public static void print(Tree node, String tab = "")
             {
                 Console.WriteLine(tab + node.data);

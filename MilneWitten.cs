@@ -10,21 +10,6 @@ using WEDT.DataProvider;
 namespace WEDT
 {
 
-    class ArticlePair
-    {
-        public ArticlePair(int f, int s)
-        {
-            first = f;
-            second = s;
-        }
-        public int first;
-        public int second;
-
-    }
-
-
-
-
     class MilneWitten
     {
         String word1;
@@ -37,8 +22,7 @@ namespace WEDT
         // pobrane w dniu 14.01.2015r.
         const int amountLinks = 1086603;
 
-        private String art1;
-        private String art2;
+        public double Cosinus;
 
 
         public MilneWitten(String word1, String word2)
@@ -48,15 +32,14 @@ namespace WEDT
             wcp = new WikiCategoryProvider();
             this.word1 = word1;
             this.word2 = word2;
-
+            Cosinus = -1;
 
         }
 
 
         public int Run()
         {
-            Console.WriteLine("--- Algorytm Strube-Ponzetto...");
-            Console.WriteLine("Poszukiwanie znaczenia słowa...");
+            Console.WriteLine("--- Algorytm Milne-Witten...");
             ChooseMeaning();
 
 
@@ -82,8 +65,15 @@ namespace WEDT
             {
                 double value = 0;
                 if(ownLinks.Contains(link))
-                    value = Math.Log(amountLinks / wpp.pagelinksTo(link).Length);
+                {
+                    List<String> list = wpp.pagelinksTo(link);
 
+                    if(list != null)
+                        value = Math.Log(amountLinks / list.Count);
+                    else
+                        value = 0;
+                }
+                   
                 vec.Add(value);
             }
 
@@ -91,13 +81,25 @@ namespace WEDT
         }
 
 
-        private double GetCosinus(double a, double b)
+        private double GetCosinus(List<double> vec1, List<double> vec2)
         {
-            // TODO poprawić jak cosinus ujemny
-            if (b != 0)
-                return Math.Cos(a / b) * 180.0 / Math.PI;
-            else
-                return 90;
+            if(vec1.Count != vec2.Count)
+                return -1;
+
+            double up = 0;
+            double a = 0;
+            double b = 0;
+
+            for(int i = 0 ; i<vec1.Count; i++)
+            {
+                up += vec1.ToArray()[i] * vec2.ToArray()[i];
+                a += vec1.ToArray()[i] * vec1.ToArray()[i];
+                b += vec2.ToArray()[i] * vec2.ToArray()[i];
+            }
+
+            double angle = up / (Math.Sqrt(a) * Math.Sqrt(b));
+
+            return angle;
 
         }
 
@@ -114,24 +116,17 @@ namespace WEDT
             if (word2Redirects == "" || word2Redirects == null)
                 word2Redirects = word2;
 
-            // sprawdzenie ujednoznacznienia
-            String word1Disam = word1 + " (ujednoznacznienie)";
-            String word2Disam = word2 + " (ujednoznacznienie)";
+            List<String> lexicalAssociationList1 = wpp.pagelinksFrom(word1Redirects);
+            List<String> lexicalAssociationList2 = wpp.pagelinksFrom(word2Redirects);
 
 
-            List<String> lexicalAssociationList1 = GetMeanings(word1Disam);
-            List<String> lexicalAssociationList2 = GetMeanings(word2Disam);
+            String[] intersected = lexicalAssociationList1.Intersect(lexicalAssociationList2).ToArray<String>();
 
-            if (lexicalAssociationList1.Count == 0)
+            if(intersected.Length == 0)
             {
-                lexicalAssociationList1 = GetMeanings(word1Redirects);
+                Cosinus = 90;
+                return true;
             }
-
-            if (lexicalAssociationList2.Count == 0)
-            {
-                lexicalAssociationList2 = GetMeanings(word2Redirects);
-            }
-
 
             List<String> lexAssList = new List<String>();
 
@@ -149,54 +144,31 @@ namespace WEDT
             if (lexAssList.Count == 0)
                 return false;
 
-            Dictionary<ArticlePair, double> cosVec = new Dictionary<ArticlePair, double>();
-
-
-            // Step 1.75
-           for (int i = 0; i<vec1.Count; i++)
-               for (int j = 0; j<vec2.Count; j++)
-               {
-                   cosVec.Add(new ArticlePair(i, j), GetCosinus(vec1[i], vec2[j]));
-               }
-
-           double min = 90;
-           int index1 = 0, index2 = 0;
-
-           foreach(var el in cosVec)
-           {
-               if (el.Value < min)
-               {
-                   min = el.Value;
-                   index1 = el.Key.first;
-                   index2 = el.Key.second;
-               }
-           }
-
-           art1 = lexAssList.ToArray()[index1];
-           art2 = lexAssList.ToArray()[index2];
-
-       
-
-          // ArticlePair articles = max.Value;
+            Cosinus = GetCosinus(vec1, vec2);
 
             return true;
         }
 
 
-
-
-
-        private bool MeasuringRelatedness()
+        public void ClassifyWords()
         {
+            Classify c = Classify.NotConnected;
 
+            Console.WriteLine("Powiązanie semantyczne między wyrazami: ");
 
-            
+            if (Cosinus == 0)
+                c = Classify.NotConnected;
+            else if (Cosinus == 1)
+                c = Classify.TheSame;
+            else if (Cosinus <= 0.3)
+                c = Classify.WeakConnected;
+            else if (Cosinus <= 0.7)
+                c = Classify.MediumConnected;
+            else
+                c = Classify.StrongConnected;
 
-
-
-
-
-            return false;
+            Analyzer.PrintConnection(c);
         }
+
     }
 }

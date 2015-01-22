@@ -8,9 +8,12 @@ namespace WEDT
 {
     class StrubePonzettoOur : StrubePonzetto
     {
-        public StrubePonzettoOur(String word1, String word2) : base(word1, word2)
-        { 
 
+
+        public List<int> lengthList;
+        public StrubePonzettoOur(String word1, String word2) : base(word1, word2)
+        {
+            lengthList = new List<int>();
         }
 
 
@@ -73,7 +76,7 @@ namespace WEDT
                 {
 
                     int length = CategoryTreeSearch(w1, w2);
-
+                    lengthList.Add(length);
                     Console.WriteLine("\t\t" + w1 + " " + w2 + ": " + length);
 
 
@@ -110,12 +113,20 @@ namespace WEDT
 
             // 2 - depth
             foreach (String cat1 in word1Categories)
-                //word1Tree.getChild(cat1).addChilds(wcp.getSubcategories(cat1));
-                word1Tree.getChild(cat1).addChilds(wcp.getUbercategory(cat1));
+            {
+                List<String> l = wcp.getUbercategory(cat1);
+                if (l != null)
+                    word1Tree.getChild(cat1).addChilds(l.ToArray());
+            }
+
 
             foreach (String cat2 in word2Categories)
-                //word2Tree.getChild(cat2).addChilds(wcp.getSubcategories(cat2));
-                word2Tree.getChild(cat2).addChilds(wcp.getUbercategory(cat2));
+            {
+                List<String> l = wcp.getUbercategory(cat2);
+                if(l != null)
+                    word2Tree.getChild(cat2).addChilds(l.ToArray());
+            }
+
 
             common = Tree.FindCommon(word1Tree, word2Tree);
 
@@ -129,22 +140,24 @@ namespace WEDT
             foreach (Tree cat in word1Tree.children)
                 foreach (Tree subCat in cat.children)
                 {
-                    //String[] tab = wcp.getSubcategories(subCat.data);
-                    String[] tab = wcp.getUbercategory(subCat.data);
-                    if (tab != null)
-                        // cat.getChild(subCat.data).addChilds(tab);
-                        cat.getChild(subCat.data).addChilds(tab);
+                    List<String> l = wcp.getUbercategory(subCat.data);
+                    if (l == null)
+                        continue;
+
+                    String[] tab = l.ToArray();
+                    cat.getChild(subCat.data).addChilds(tab);
                 }
 
 
             foreach (Tree cat in word2Tree.children)
                 foreach (Tree subCat in cat.children)
                 {
-                    //String[] tab = wcp.getSubcategories(subCat.data);
-                    String[] tab = wcp.getUbercategory(subCat.data);
-                    if (tab != null)
-                        //cat.getChild(subCat.data).addChilds(tab);
-                        cat.getChild(subCat.data).addChilds(tab);
+                    List<String> l = wcp.getUbercategory(subCat.data);
+                    if (l == null)
+                        continue;
+
+                    String[] tab = l.ToArray();
+                    cat.getChild(subCat.data).addChilds(tab);
                 }
 
             common = Tree.FindCommon(word1Tree, word2Tree);
@@ -159,22 +172,24 @@ namespace WEDT
                 foreach (Tree subCat in cat.children)
                     foreach (Tree subsubCat in subCat.children)
                     {
-                        //String[] tab = wcp.getSubcategories(subsubCat.data);
-                        String[] tab = wcp.getUbercategory(subsubCat.data);
-                        if (tab != null)
-                            //subCat.getChild(subsubCat.data).addChilds(tab);
-                            subCat.getChild(subsubCat.data).addChilds(tab);
+                        List<String> l = wcp.getUbercategory(subsubCat.data);
+                        if (l == null)
+                            continue;
+
+                        String[] tab = l.ToArray();
+                        subCat.getChild(subsubCat.data).addChilds(tab);
                     }
 
             foreach (Tree cat in word2Tree.children)
                 foreach (Tree subCat in cat.children)
                     foreach (Tree subsubCat in subCat.children)
                     {
-                        //String[] tab = wcp.getSubcategories(subsubCat.data);
-                        String[] tab = wcp.getUbercategory(subsubCat.data);
-                        if (tab != null)
-                            //subCat.getChild(subsubCat.data).addChilds(tab);
-                            subCat.getChild(subsubCat.data).addChilds(tab);
+                        List<String> l = wcp.getUbercategory(subsubCat.data);
+                        if (l == null)
+                            continue;
+
+                        String[] tab = l.ToArray();
+                        subCat.getChild(subsubCat.data).addChilds(tab);
                     }
 
             common = Tree.FindCommon(word1Tree, word2Tree);
@@ -188,47 +203,25 @@ namespace WEDT
             return -1;
         }
 
-        //protected int GetLength(Tree w1, Tree w2)
-        //{
-        //    if (w1.data == w2.data)
-        //    {
-        //        return 0;
-        //    }
-        //    return Tree.GetLength(w1) + Tree.GetLength(w2);
-        //}
+        public override void ClassifyWords()
+        {
+            int p = lengthList.ToArray().Max();
+            Classify c = Classify.NotConnected;
 
-        //protected int GetLength(Tree tree, String word)
-        //{
-        //    if(tree.data == word)
-        //        return 0;
-            
+            Console.WriteLine("Powiązanie semantyczne między wyrazami: ");
 
-        //    foreach (Tree cat in tree.children)
-        //        if(cat.data == word)
-        //            return 1;
+            if (p < 0)
+                c = Classify.NotConnected;
+            else if (p == 0)
+                c = Classify.TheSame;
+            else if (p <= 3)
+                c = Classify.StrongConnected;
+            else if (p <= 6)
+                c = Classify.MediumConnected;
+            else
+                c = Classify.WeakConnected;
 
-        //    foreach (Tree cat in tree.children)
-        //        foreach (Tree subCat in cat.children)
-        //            if(subCat.data == word)
-        //                return 2;
-
-        //    foreach (Tree cat in tree.children)
-        //        foreach (Tree subCat in cat.children)
-        //            foreach (Tree subsubCat in subCat.children)
-        //                if(subsubCat.data == word)
-        //                    return 3;
-                   
- 
-        //    foreach (Tree cat in tree.children)
-        //        foreach (Tree subCat in cat.children)
-        //            foreach (Tree subsubCat in subCat.children)
-        //                foreach (Tree subsubsubCat in subsubCat.children)
-        //                    if (subsubsubCat.data == word)
-        //                        return 4;
-
-        //    return -1;
-
-        //}
-
+            Analyzer.PrintConnection(c);
+        }
     }
 }

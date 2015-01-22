@@ -18,14 +18,14 @@ namespace WEDT.DataProvider
             store = new SparqlConnector(new Uri("http://pl.dbpedia.org/sparql"));
         }
 
-        public String[] pagelinksFrom(String from)
+        public List<String> pagelinksFrom(String from)
         {
-            return this.getList(from, "WikiLink", false).ToArray();
+            return this.getList(from, "WikiLink", false);
         }
 
-        public String[] pagelinksTo(String to)
+        public List<String> pagelinksTo(String to)
         {
-            return this.getList(to, "WikiLink", true).ToArray();
+            return this.getList(to, "WikiLink", true);
         }
 
         public String[] disambiguates(String from)
@@ -47,7 +47,16 @@ namespace WEDT.DataProvider
                 + "> "
                 + (reverse ? resource(a) : " ?a ")
                 + ". }";
-            Object results = store.Query(strQuery);
+            Object results;
+            try
+            {
+                results = store.Query(strQuery);
+            }
+            catch
+            {
+                return null;
+            }
+
             if (results is SparqlResultSet)
             {
                 SparqlResultSet rset = (SparqlResultSet)results;

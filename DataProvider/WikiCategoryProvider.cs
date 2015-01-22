@@ -84,7 +84,7 @@ namespace WEDT.DataProvider
             return list.ToArray();
         }
 
-        public String[] getUbercategory(String a)
+        public List<String> getUbercategory(String a)
         {
 
             List<String> list = new List<String>();
@@ -94,7 +94,16 @@ namespace WEDT.DataProvider
                 "select ?a{ <http://pl.dbpedia.org/resource/Kategoria:"
                 + a
                 + "> <http://www.w3.org/2004/02/skos/core#broader> ?a }";
-            Object results = store.Query(strQuery);
+            Object results;
+            try
+            {
+                results = store.Query(strQuery);
+            }
+            catch
+            {
+                return null;
+
+            }
             if (results is SparqlResultSet)
             {
                 SparqlResultSet rset = (SparqlResultSet)results;
@@ -111,7 +120,7 @@ namespace WEDT.DataProvider
                 throw new Exception("Did not get a SPARQL Result Set as expected");
             }
 
-            return list.ToArray();
+            return list;
         }
     }
 }

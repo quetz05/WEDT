@@ -55,8 +55,8 @@ namespace WEDT
                 return 2;
             Console.WriteLine("Pobieranie długości ścieżki...");
             GetLength(commonCategory);
-            Console.WriteLine("pl: " + Analyzer.pl(pathLength));
-            Console.WriteLine("lch: "+ Analyzer.lch(pathLength));
+            Console.WriteLine("Długość ścieżki: " + Analyzer.pl(pathLength));
+            //Console.WriteLine("lch: "+ Analyzer.lch(pathLength));
             return 0;
 
         }
@@ -130,9 +130,6 @@ namespace WEDT
                lexicalAssociationList2 = GetMeanings(word2Redirects);
            }
 
-           //lexicalAssociationList1.Sort();
-           //lexicalAssociationList2.Sort();
-
            List<String> lexicalCroppedList1 = GetCroppedMeanings(lexicalAssociationList1.ToArray());
            List<String> lexicalCroppedList2 = GetCroppedMeanings(lexicalAssociationList2.ToArray());
 
@@ -190,12 +187,10 @@ namespace WEDT
            // 2 - depth
            Console.WriteLine("\tCategoryTreeSearch:: 2 depth");
            foreach (String cat1 in word1Categories)
-               //word1Tree.getChild(cat1).addChilds(wcp.getSubcategories(cat1));
-               word1Tree.getChild(cat1).addChilds(wcp.getUbercategory(cat1));
+               word1Tree.getChild(cat1).addChilds(wcp.getUbercategory(cat1).ToArray());
 
            foreach (String cat2 in word2Categories)
-              //word2Tree.getChild(cat2).addChilds(wcp.getSubcategories(cat2));
-                word2Tree.getChild(cat2).addChilds(wcp.getUbercategory(cat2));
+               word2Tree.getChild(cat2).addChilds(wcp.getUbercategory(cat2).ToArray());
 
            common = Tree.FindCommon(word1Tree, word2Tree);
 
@@ -210,10 +205,8 @@ namespace WEDT
            foreach (Tree cat in word1Tree.children)
                foreach (Tree subCat in cat.children)
                {
-                   //String[] tab = wcp.getSubcategories(subCat.data);
-                   String[] tab = wcp.getUbercategory(subCat.data);
+                   String[] tab = wcp.getUbercategory(subCat.data).ToArray();
                    if (tab != null)
-                      // cat.getChild(subCat.data).addChilds(tab);
                        cat.getChild(subCat.data).addChilds(tab);
                }
 
@@ -221,10 +214,8 @@ namespace WEDT
            foreach (Tree cat in word2Tree.children)
                foreach (Tree subCat in cat.children)
                {
-                   //String[] tab = wcp.getSubcategories(subCat.data);
-                   String[] tab = wcp.getUbercategory(subCat.data);
+                   String[] tab = wcp.getUbercategory(subCat.data).ToArray();
                    if (tab != null)
-                       //cat.getChild(subCat.data).addChilds(tab);
                        cat.getChild(subCat.data).addChilds(tab);
                }
 
@@ -241,10 +232,8 @@ namespace WEDT
                foreach (Tree subCat in cat.children)
                    foreach (Tree subsubCat in subCat.children)
                    {
-                       //String[] tab = wcp.getSubcategories(subsubCat.data);
-                       String[] tab = wcp.getUbercategory(subsubCat.data);
+                       String[] tab = wcp.getUbercategory(subsubCat.data).ToArray();
                        if (tab != null)
-                           //subCat.getChild(subsubCat.data).addChilds(tab);
                             subCat.getChild(subsubCat.data).addChilds(tab);
                    }
 
@@ -252,10 +241,8 @@ namespace WEDT
                foreach (Tree subCat in cat.children)
                    foreach (Tree subsubCat in subCat.children)
                    {
-                       //String[] tab = wcp.getSubcategories(subsubCat.data);
-                       String[] tab = wcp.getUbercategory(subsubCat.data);
+                       String[] tab = wcp.getUbercategory(subsubCat.data).ToArray();
                        if (tab != null)
-                           //subCat.getChild(subsubCat.data).addChilds(tab);
                             subCat.getChild(subsubCat.data).addChilds(tab);
                    }
 
@@ -264,43 +251,6 @@ namespace WEDT
                commonCategory = common;
                return true;
            }
-
-           //// 5 - depth
-           //Console.WriteLine("\tCategoryTreeSearch:: 5 depth");
-           //foreach (Tree cat in word1Tree.children)
-           //    foreach (Tree subCat in cat.children)
-           //        foreach (Tree subsubCat in subCat.children)
-           //            foreach (Tree subsubsubCat in subsubCat.children)
-           //            {
-           //                //String[] tab = wcp.getSubcategories(subsubCat.data);
-           //                String[] tab = wcp.getUbercategory(subsubsubCat.data);
-           //                if (tab != null)
-           //                    //subCat.getChild(subsubCat.data).addChilds(tab);
-           //                    subsubCat.getChild(subsubsubCat.data).addChilds(tab);
-           //            }
-
-           //foreach (Tree cat in word2Tree.children)
-           //    foreach (Tree subCat in cat.children)
-           //        foreach (Tree subsubCat in subCat.children)
-           //            foreach (Tree subsubsubCat in subsubCat.children)
-           //            {
-           //                //String[] tab = wcp.getSubcategories(subsubCat.data);
-           //                String[] tab = wcp.getUbercategory(subsubsubCat.data);
-           //                if (tab != null)
-           //                    //subCat.getChild(subsubCat.data).addChilds(tab);
-           //                    subsubCat.getChild(subsubsubCat.data).addChilds(tab);
-           //            }
-
-           //if (common != "")
-           //{
-           //    commonCategory = common;
-           //    return true;
-           //}
-
-
-           //Tree.print(word1Tree);
-           //Console.WriteLine(" ");
-           //Tree.print(word2Tree);
 
            return false;
        }
@@ -369,6 +319,27 @@ namespace WEDT
            pathLength = GetLength(word1Tree, common) + GetLength(word2Tree, common);
        }
 
+
+       public virtual void ClassifyWords()
+       {
+           int p = pathLength;
+           Classify c = Classify.NotConnected;
+
+           Console.WriteLine("Powiązanie semantyczne między wyrazami: ");
+
+           if (p < 0)
+               c = Classify.NotConnected;
+           else if (p == 0)
+               c = Classify.TheSame;
+           else if (p <= 3)
+               c = Classify.StrongConnected;
+           else if (p <= 6)
+               c = Classify.MediumConnected;
+           else
+               c = Classify.WeakConnected;
+
+           Analyzer.PrintConnection(c);
+       }
 
 
     }

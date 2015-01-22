@@ -3,59 +3,122 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Timers;
 
 namespace WEDT
 {
     class Program
     {
 
-        static void Algo1(String word1, String word2)
+        // algorytm StrubePonzetto
+        static int Algo1(String word1, String word2)
         {
-            // SP
             StrubePonzetto sp = new StrubePonzetto(word1, word2);
 
+            DateTime start = DateTime.Now;
             int result = sp.Run();
+            DateTime end = DateTime.Now;
+            TimeSpan interval = end.Subtract(start);
+
+            Console.WriteLine("Algorytm wykonywał się " + interval.Milliseconds + "ms.");
 
             if (result == 1)
                 Console.WriteLine("Brak jednego ze słów w bazie!");
             else if (result == 2)
                 Console.WriteLine("Brak wspólnej kategorii");
 
-            Console.WriteLine("");
-            Console.WriteLine("Podobieństwo (0-10) wynosi: " + sp.GetSimilarity());
+            sp.ClassifyWords();
 
             Console.WriteLine();
             Console.WriteLine();
+
+            return sp.pathLength;
         }
 
-        static void Algo2(String word1, String word2)
+        // algorytm MilneWitten
+        static double Algo2(String word1, String word2)
         {
-
-            // MW
             MilneWitten mw = new MilneWitten(word1, word2);
+
+            DateTime start = DateTime.Now;
             int result = mw.Run();
+            DateTime end = DateTime.Now;
+            TimeSpan interval = end.Subtract(start);
+            Console.WriteLine("Algorytm wykonywał się " + interval.Milliseconds + "ms.");
 
             if (result == 1)
                 Console.WriteLine("Brak jednego ze słów w bazie!");
-            else if (result == 2)
-                Console.WriteLine("Brak wspólnej kategorii");
 
+            Console.WriteLine("Cosinus kąta: " + mw.Cosinus);
+            mw.ClassifyWords();
+            Console.WriteLine();
+            Console.WriteLine();
+            return mw.Cosinus;
         }
 
-        static void Algo3(String word1, String word2)
+        // algorytm StrubePonzettoOur
+        static int Algo3(String word1, String word2)
         {
-            // SP
             StrubePonzettoOur sp = new StrubePonzettoOur(word1, word2);
 
+            DateTime start = DateTime.Now;
             int result = sp.Run();
+            DateTime end = DateTime.Now;
+            TimeSpan interval = end.Subtract(start);
+
+            Console.WriteLine("Algorytm wykonywał się " + interval.Milliseconds + "ms.");
 
             if (result == 1)
-                Console.WriteLine("Brak jednego ze słów w bazie!");
+                Console.WriteLine("Brak jednego ze słów w bazie!"); 
+            Console.WriteLine();
+            Console.WriteLine();
 
-            Console.WriteLine();
-            Console.WriteLine();
+
+            return sp.lengthList.ToArray().Max();
         }
 
+
+        //static void Main(string[] args)
+        //{
+        //    String[] lines = File.ReadAllLines("hasla.txt");
+        //    List<String> list1= new List<String>();
+
+
+            /////1 ALGORYTM
+            //foreach (String line in lines)
+            //{
+            //    String[] words = line.Split(',');
+            //    list1.Add(words[0] + "," + words[1] + "," + Algo1(words[0], words[1]));
+            //}
+
+            //File.WriteAllLines("algo1.txt", list1.ToArray());
+
+            //list1.Clear();
+
+
+            ///2ALGORYTM
+            //foreach (String line in lines)
+            //{
+            //    String[] words = line.Split(',');
+            //    list1.Add(words[0] + "," + words[1] + "," + Algo2(words[0], words[1]));
+            //}
+
+            //File.WriteAllLines("algo2.txt", list1.ToArray());
+
+
+            //list1.Clear();
+
+            ///3 ALGORYTM
+        //    foreach (String line in lines)
+        //    {
+        //        String[] words = line.Split(',');
+        //        list1.Add(words[0] + "," + words[1] + "," + Algo3(words[0], words[1]));
+        //        //File.AppendAllText("algo3.txt", words[0] + "," + words[1] + "," + Algo3(words[0], words[1]) + "\n");
+        //    }
+
+        //    File.WriteAllLines("algo3.txt", list1.ToArray());
+        //}
 
         static void Main(string[] args)
         {
